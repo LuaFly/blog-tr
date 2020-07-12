@@ -7,6 +7,7 @@ function dd($value){ //deletar após desenvolvimento
     die();
 }
 
+<<<<<<< HEAD
 function executeQuery($sql, $data){
     global $conexao;
     $stmt= $conexao-> prepare($sql);
@@ -19,6 +20,8 @@ function executeQuery($sql, $data){
 }
 
 
+=======
+>>>>>>> 59c850114c05fe0364830466b3e39e760ebe7ead
 function selectAll($table, $conditions = []){
     global $conexao;
 
@@ -31,6 +34,7 @@ function selectAll($table, $conditions = []){
         return $records;
     }else{
        // $sql = "SELECT * FROM users WHERE username='Luana' AND admin=1";
+<<<<<<< HEAD
         $i = 0;
         foreach($conditions as $key => $value){
             if($i === 0){
@@ -103,4 +107,28 @@ $data = [
 
 $id = create('users', $data);
 dd($id);
+=======
+    
+        $i = 0;
+        foreach($conditions as $key => $value){
+            if($i===0){
+                $sql = $sql . "WHERE $key=$value";
+            }else{
+                $sql = $sql . "AND $key=$value";
+            }
+            $i++;
+        }
+        dd($sql);
+    
+    }
+   
+}
+$conditions = [
+    'admin' =>1,
+    'username'=> 'Luana'
+];
+
+$users = selectAll('users', $conditions);
+dd($users);
+>>>>>>> 59c850114c05fe0364830466b3e39e760ebe7ead
 ?>
