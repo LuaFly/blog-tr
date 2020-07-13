@@ -10,24 +10,25 @@
         <li><a href="<?php echo BASE_URL . '/inicial.php'?>">Home</a></li>
         <li><a href="#">About</a></li>
         <li><a href="#">Services</a></li>
-        <li><a href="register.php">Sign up</a></li>
+        
+        <?php if(isset($_SESSION['id'])): ?>
+
         <li>
-          <a href="login.php">
-            <i class="fa fa-sign-in"></i>
-            Login
-          </a>
+        <a href="#">
+        <i class="fa fa-user"> </i>
+         <?php echo $_SESSION['username']; ?>
+        <i class="fa fa-chevron-down" style="font-size: .8em"></i>
+        </a>
+        <ul class="dropdown"> 
+          <li> <a href="#"> Inicio </a></li>
+          <li> <a href='#' class="logout"> Sair </a> </li>
+        </ul>
         </li>
-        <li>
-          <a href="#" class="userinfo">
-            <i class="fa fa-user"></i>
-            
-            <i class="fa fa-chevron-down"></i>
-          </a>
-          <ul class="dropdown">
-            <li><a href="admin/posts/inicial.php">Dashboard</a></li>
-            <li><a href="#" class="logout">logout</a></li>
-          </ul>
-        </li>
+      
+        <?php else:?>
+          <li> <a href="#"> Cadastrar </a></li>
+        <li> <a href="#"> Entrar </a></li>
+        <?php endif;?>
       </ul>
     </nav>
   </header>

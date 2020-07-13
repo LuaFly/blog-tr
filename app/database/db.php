@@ -1,5 +1,6 @@
 <?php 
 
+session_start();
 require('conexao.php');
 
 function dd($value){ //deletar após desenvolvimento
@@ -7,7 +8,6 @@ function dd($value){ //deletar após desenvolvimento
     die();
 }
 
-<<<<<<< HEAD
 function executeQuery($sql, $data){
     global $conexao;
     $stmt= $conexao-> prepare($sql);
@@ -20,8 +20,6 @@ function executeQuery($sql, $data){
 }
 
 
-=======
->>>>>>> 59c850114c05fe0364830466b3e39e760ebe7ead
 function selectAll($table, $conditions = []){
     global $conexao;
 
@@ -34,7 +32,6 @@ function selectAll($table, $conditions = []){
         return $records;
     }else{
        // $sql = "SELECT * FROM users WHERE username='Luana' AND admin=1";
-<<<<<<< HEAD
         $i = 0;
         foreach($conditions as $key => $value){
             if($i === 0){
@@ -81,7 +78,7 @@ function selectOne($table, $conditions){
 
 function create($table, $data){
     global $conexao;
-    $sql = "INSERT INTO users SET ";
+    $sql = "INSERT INTO $table SET ";
 
     $i = 0;
         foreach($data as $key => $value){
@@ -98,37 +95,43 @@ function create($table, $data){
         return $id;
 }
 
-$data = [
-    'username' => 'Luana Ferreira',
-    'admin'=> 1,
-    'email'=> 'lu@lu.com',
-    'password'=> 'lu123'
-];
 
-$id = create('users', $data);
-dd($id);
-=======
-    
-        $i = 0;
-        foreach($conditions as $key => $value){
-            if($i===0){
-                $sql = $sql . "WHERE $key=$value";
+function update($table, $id, $data){
+    global $conexao;
+    $sql = "UPDATE $table SET ";
+
+    $i = 0;
+        foreach($data as $key => $value){
+            if($i === 0){
+                $sql = $sql . " $key=?";
             }else{
-                $sql = $sql . "AND $key=$value";
+                $sql = $sql . ", $key=?";
+
             }
             $i++;
         }
-        dd($sql);
-    
-    }
-   
+        $sql = $sql ." WHERE id=?";
+        $data['id'] = $id;
+        $stmt = executeQuery($sql, $data);
+        return $stmt->affected_rows;
 }
-$conditions = [
-    'admin' =>1,
-    'username'=> 'Luana'
-];
 
-$users = selectAll('users', $conditions);
-dd($users);
->>>>>>> 59c850114c05fe0364830466b3e39e760ebe7ead
+
+function delete($table, $id){
+    global $conexao;
+    $sql = "DELETE FROM $table WHERE id=?";
+
+    $stmt = executeQuery($sql, ['$id' => $id]);
+    return $stmt->affected_rows;
+}
+
+// $data = [
+//     'username' => 'Teste Luana Ferreira',
+//     'admin'=> 1,
+//     'email'=> 'lu@lu.com',
+//     'password'=> 'lu123'
+// ];
+
+// $id = delete('users', 1);
+// dd($id);
 ?>
