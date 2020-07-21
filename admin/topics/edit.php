@@ -1,4 +1,5 @@
 <?php include("../../path.php");?>
+<?php include(ROOT_PATH . "/app/controllers/topics.php");?>
 <html lang="en">
 
 <head>
@@ -30,17 +31,20 @@
       </div>
       <div class="">
         <h2 style="text-align: center;">Editar Topico</h2>
-        <form action="create.php" method="post">
+        <form action="edit.php" method="post">
           <div class="input-group">
+          
+          <input type="hidden" name="id" value="<?php echo $id; ?>">
+
             <label>Name</label>
-            <input type="text" name="name" class="text-input">
+            <input type="text" name="name" value="<?php echo $name; ?>" class="text-input">
           </div>
           <div class="input-group">
             <label>Description</label>
-            <textarea class="text-input" name="description" id="description"></textarea>
+            <textarea class="text-input" name="description" id="body"><?php echo $description; ?></textarea>
           </div>
           <div class="input-group">
-            <button type="submit" name="save-topic" class="btn" >Save Topic</button>
+            <button type="submit" name="update-topic" class="btn" >Save Topic</button>
           </div>
         </form>
       </div>
