@@ -13,7 +13,7 @@
   <!-- Admin Styling -->
   <link rel="stylesheet" href="../../assets/css/admin.css">
   <link rel="stylesheet" href="../../assets/css/inicial.css">
-  <title>Admin - Create Topic</title>
+  <title>Admin - Editar</title>
 </head>
 <body>
   <!-- header -->
@@ -26,11 +26,12 @@
     <!-- Admin Content -->
     <div class="admin-content clearfix">
       <div class="button-group">
-        <a href="create.php" class="btn btn-sm">Add Topic</a>
-        <a href="index.php" class="btn btn-sm">Manage Topics</a>
+        <a href="create.php" class="btn btn-sm">Adicionar Topico</a>
+        <a href="index.php" class="btn btn-sm">Gerenciar  Topicos</a>
       </div>
       <div class="">
         <h2 style="text-align: center;">Editar Topico</h2>
+        <?php include(ROOT_PATH . "/app/helpers/formErrors.php")?>
         <form action="edit.php" method="post">
           <div class="input-group">
           

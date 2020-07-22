@@ -27,19 +27,22 @@
     <!-- Admin Content -->
     <div class="admin-content clearfix">
       <div class="button-group">
-        <a href="create.php" class="btn btn-sm">Add Topic</a>
-        <a href="index.php" class="btn btn-sm">Manage Topics</a>
+        
+        <a href="create.php" class="btn btn-sm">Adicionar Topico</a>
+        <?php include(ROOT_PATH . "/app/helpers/formErrors.php")?>
+        <a href="index.php" class="btn btn-sm">Gerenciar Topicos</a>
+      
       </div>
       <div class="">
-        <h2 style="text-align: center;">Create Topic</h2>
+        <h2 style="text-align: center;">Criar Topico</h2>
         <form action="create.php" method="post">
           <div class="input-group">
-            <label>Name</label>
-            <input type="text" name="name" class="text-input">
+            <label>Nome</label>
+            <input type="text" name="name" value="<?php echo $name ?>" class="text-input">
           </div>
           <div class="input-group">
-            <label>Description</label>
-            <textarea class="text-input" name="description" id="description"></textarea>
+            <label>Descrição</label>
+            <textarea class="text-input" name="description" value="<?php echo $description ?>" id="description"></textarea>
           </div>
           <div class="input-group">
             <button type="submit" name="add-topic" class="btn" >Save Topic</button>

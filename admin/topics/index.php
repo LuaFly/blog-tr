@@ -53,7 +53,7 @@
                 </a>
               </td>
               <td>
-                <a href="#" class="delete">
+                <a href="index.php?del_id=<?php echo $topic['id'] ?>" class="delete">
                   Delete
                 </a>
             <?php endforeach; ?>
