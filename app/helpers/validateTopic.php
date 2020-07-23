@@ -9,7 +9,7 @@ function validateTopic($topic){
         
 
         $existingTopic= selectOne('topics', ['name' => $topic['name']]);
-        if(isset($existingTopic)){
+        if($existingTopic){
             array_push($errors, 'Topico já existe');
         }
     return $errors;

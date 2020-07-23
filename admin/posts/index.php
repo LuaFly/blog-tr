@@ -1,4 +1,6 @@
-<?php include("../../path.php");?>
+<?php include("../../path.php");
+include(ROOT_PATH . "/app/controllers/posts.php");
+?>
 <html lang="en">
 
 <head>
@@ -30,6 +32,7 @@
       </div>
       <div class="">
         <h2 style="text-align: center;">Manage Posts</h2>
+        <?php include(ROOT_PATH . "/app/includes/messages.php")?>
         <table>
           <thead>
             <th>N</th>
@@ -38,10 +41,11 @@
             <th colspan="3">Action</th>
           </thead>
           <tbody>
-            <tr class="rec">
-              <td>1</td>
+          <?php foreach($posts as $key => $post): ?>
+            <tr>
+              <td> <?php echo $key +1; ?></td>
               <td>
-                <a href="#">A replacement for new year resolutions - a 12 months challenge</a>
+                <?php echo $post['title']?>
               </td>
               <td>Awa</td>
               <td>
@@ -55,55 +59,21 @@
                 </a>
               </td>
               <td>
-                <a href="#" class="publish">
+              <?php if($post['published']):?>
+              
+                <a href="#" class="unpublish">
+                  unpublish
+                </a>
+              </td>
+              <?php else: ?>
+              <a href="#" class="publish">
                   Publish
                 </a>
-              </td>
+              <?php endif; ?>
             </tr>
-            <tr class="rec">
-              <td>2</td>
-              <td>
-                <a href="#">Why life is beautiful</a>
-              </td>
-              <td>Awa</td>
-              <td>
-                <a href="edit.php" class="edit">
-                  Edit
-                </a>
-              </td>
-              <td>
-                <a href="#" class="delete">
-                  Delete
-                </a>
-              </td>
-              <td>
-                <a href="#" class="publish">
-                  Publish
-                </a>
-              </td>
-            </tr>
-            <tr class="rec">
-              <td>3</td>
-              <td>
-                <a href="#">Interesting facts about the history of the world</a>
-              </td>
-              <td>Awa</td>
-              <td>
-                <a href="edit.php" class="edit">
-                  Edit
-                </a>
-              </td>
-              <td>
-                <a href="#" class="delete">
-                  Delete
-                </a>
-              </td>
-              <td>
-                <a href="#" class="publish">
-                  Publish
-                </a>
-              </td>
-            </tr>
+          <?php endforeach;?>
+            
+           
           </tbody>
         </table>
       </div>

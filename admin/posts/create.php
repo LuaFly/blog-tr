@@ -1,4 +1,5 @@
 <?php include("../../path.php");?>
+<?php include(ROOT_PATH . "/app/controllers/posts.php")?>
 <html lang="en">
 
 <head>
@@ -25,36 +26,48 @@
     <!-- Admin Content -->
     <div class="admin-content clearfix">
       <div class="button-group">
-        <a href="create.php" class="btn btn-sm">Add Post</a>
-        <a href="index.php" class="btn btn-sm">Manage Posts</a>
+        <a href="create.php" class="btn btn-sm">Adicionar Post</a>
+        <a href="index.php" class="btn btn-sm">Gerenciar Posts</a>
       </div>
       <div class="">
-        <h2 style="text-align: center;">Create Post</h2>
+        <h2 style="text-align: center;">criar Post</h2>
+        <?php include(ROOT_PATH . '/app/helpers/formErrors.php'); ?>
         <form action="create.php" method="post">
           <div class="input-group">
             <label>Title</label>
-            <input type="text" name="title" class="text-input">
+            <input type="text" name="title" value="<?php echo $title ?>" class="text-input">
           </div>
+        
           <div class="input-group">
             <label>Body</label>
-            <textarea class="text-input" name="body" id="body"></textarea>
+            <textarea class="text-input" name="body" value="<?php echo $body ?>" id="body"></textarea>
+          </div>
+          <div>
+              <label>File</label>
+              <input type="file" name="image" class="text-input">
           </div>
           <div class="input-group">
-            <label>Topic</label>
-            <select class="text-input" name="topic">
-              <option>Life</option>
-              <option>Poetry</option>
-              <option>Inspiration</option>
-              <option>Life Lessons</option>
+            <label>Topico</label>
+            <!-- novo  -->
+            <select class="text-input" name="topic_id" >
+              <?php foreach($topics as $key => $topic):?>
+                <?php if (!empty($topic_id) && $topic_id == $topic['id']): ?>
+                  <option selected value="<?php echo $topic['id']?>"> <?php echo $topic['name']?> </option>
+                <?php else: ?>
+                  <option value="<?php echo $topic['id']?>"> <?php echo $topic['name']?> </option>
+                <?php endif;?>
+               
+              <?php endforeach; ?>
+
             </select>
           </div>
           <div class="input-group">
             <label>
-              <input type="checkbox" name="publish" /> Publish
+              <input type="checkbox" name="published" /> Publish
             </label>
           </div>
           <div class="input-group">
-            <button type="submit" name="save-post" class="btn">Save Post</button>
+            <button type="submit"  name="add-post" class="btn">Save Post</button>
           </div>
         </form>
       </div>
