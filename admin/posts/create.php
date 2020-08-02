@@ -1,5 +1,8 @@
 <?php include("../../path.php");?>
-<?php include(ROOT_PATH . "/app/controllers/posts.php")?>
+<?php include(ROOT_PATH . "/app/controllers/posts.php");
+adminOnly();
+?>
+
 <html lang="en">
 
 <head>
@@ -32,7 +35,7 @@
       <div class="">
         <h2 style="text-align: center;">criar Post</h2>
         <?php include(ROOT_PATH . '/app/helpers/formErrors.php'); ?>
-        <form action="create.php" method="post">
+        <form action="create.php" method="post" enctype="multipart/form-data">
           <div class="input-group">
             <label>Title</label>
             <input type="text" name="title" value="<?php echo $title ?>" class="text-input">
@@ -62,9 +65,18 @@
             </select>
           </div>
           <div class="input-group">
+           <?php if(empty($publisehd)):?>
             <label>
               <input type="checkbox" name="published" /> Publish
             </label>
+           <?php else: ?>
+
+            <label>
+              <input type="checkbox" name="published" checked /> Publish
+            </label>
+
+           <?php endif; ?>
+
           </div>
           <div class="input-group">
             <button type="submit"  name="add-post" class="btn">Save Post</button>

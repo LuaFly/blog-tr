@@ -1,5 +1,21 @@
 <?php include("path.php");
 include(ROOT_PATH . "/app/controllers/topics.php");
+
+$posts = array();
+$postsTitle= "Posts Recentes";
+
+if(isset($_GET['t_id'])){
+  $posts = getPostsByTopicId($_GET['t_id']);
+  $postsTitle = "Você pesquisou por posts em: " . $_GET['name'];
+}
+else if (isset($_POST['search-term'])){
+  $postsTitle = "Você pesquisou por " . $_POST['search-term'];
+  $posts = searchPosts($_POST['search-term']);
+}else{
+  $posts = getPublishedPosts();
+}
+
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -30,127 +46,73 @@ include(ROOT_PATH . "/app/controllers/topics.php");
       <i class="fa fa-chevron-right next"></i>
       <i class="fa fa-chevron-left prev"></i>
       <div class="posts-wrapper">
+
+      <?php foreach($posts as $post): ?>
+
         <div class="post">
           <div class="inner-post">
-            <img src="assets/images/image_7.jpg" alt="" style="height: 200px; width: 100%; border-top-left-radius: 5px; border-top-right-radius: 5px;">
+            <img src="<?php echo BASE_URL . '/assets/images/' . $post['image']; ?>" alt="" style="height: 200px; width: 100%; border-top-left-radius: 5px; border-top-right-radius: 5px;">
             <div class="post-info">
-              <h4><a href="single.php">Lorem ipsum dolor sit amet consectetur, adipisicing elit. Dolorem, atque veniam voluptatibus minus natus ducimus velit molestiae quasi quibusdam autem! Esse vel dignissimos assumenda reiciendis ipsa nisi temporibus molestiae sequi.</a></h3>
+              <h4><a href="single.php?id=<?php echo $post['id'];?>"><?php echo $post['title']; ?> </a></h3>
                 <div>
-                  <i class="fa fa-user-o"></i> Awa Melvine
+                  <i class="fa fa-user-o"> <?php echo $post['username']; ?> </i> 
                   &nbsp;
-                  <i class="fa fa-calendar"></i> Jan 18, 2019
+                  <i class="fa fa-calendar"></i> <?php echo date('F j, Y', strtotime($post['created_at']));?>
                 </div>
             </div>
           </div>
         </div>
-        <div class="post">
-          <div class="inner-post">
-            <img src="assets/images/image_6.jpg" alt="" style="height: 200px; width: 100%; border-top-left-radius: 5px; border-top-right-radius: 5px;">
-            <div class="post-info">
-              <h4><a href="single.php">Lorem ipsum dolor, sit amet consectetur adipisicing elit. Incidunt sed eum numquam minus deserunt non quam, consequatur quasi illo molestiae. Vero eius harum quasi alias nemo voluptates rem sed explicabo.</a></h3>
-                <div>
-                  <i class="fa fa-user-o"></i> Awa Melvine
-                  &nbsp;
-                  <i class="fa fa-calendar"></i> Jan 18, 2019
-                </div>
-            </div>
-          </div>
-        </div>
-        <div class="post">
-          <div class="inner-post">
-            <img src="assets/images/image_5.jpg" alt="" style="height: 200px; width: 100%; border-top-left-radius: 5px; border-top-right-radius: 5px;">
-            <div class="post-info">
-              <h4><a href="single.php">Lorem ipsum dolor sit amet consectetur adipisicing elit. Quod harum magnam laudantium explicabo nihil porro, vitae fugit maxime molestias tempora magni necessitatibus natus, quo asperiores autem quis accusamus quasi animi!</a></h3>
-                <div>
-                  <i class="fa fa-user-o"></i> Awa Melvine
-                  &nbsp;
-                  <i class="fa fa-calendar"></i> Jan 18, 2019
-                </div>
-            </div>
-          </div>
-        </div>
-        <div class="post">
-          <div class="inner-post">
-            <img src="assets/images/image_4.jpg" alt="" style="height: 200px; width: 100%; border-top-left-radius: 5px; border-top-right-radius: 5px;">
-            <div class="post-info">
-              <h4><a href="single.php">Lorem ipsum dolor sit amet consectetur adipisicing elit. Quod harum magnam laudantium explicabo nihil porro, vitae fugit maxime molestias tempora magni necessitatibus natus, quo asperiores autem quis accusamus quasi animi!</a></h4>
-              <div>
-                <i class="fa fa-user-o"></i> Awa Melvine
-                &nbsp;
-                <i class="fa fa-calendar"></i> Jan 18, 2019
-              </div>
-            </div>
-          </div>
-        </div>
+
+      <?php endforeach; ?>
       </div>
-    </div>
+      </div>
+
+
+        
     <!-- // Posts Slider -->
     <!-- content -->
     <div class="content clearfix">
       <div class="page-content">
-        <h1 class="recent-posts-title">Posts Recentes</h1>
-        <div class="post clearfix">
-          <img src="assets/images/image_1.jpg" class="post-image" alt="">
+        <h1 class="recent-posts-title"><?php echo $postsTitle ?></h1>
+
+        <?php foreach($posts as $post): ?>
+
+          <div class="post clearfix">
+          <img src="<?php echo BASE_URL . '/assets/images/' . $post['image']; ?>" class="post-image" alt="">
           <div class="post-content">
-            <h2 class="post-title"><a href="#">The strongest and sweetest songs yet remain to be sung</a></h2>
+            <h2 class="post-title"><a href="single.php?id=<?php echo $post['id'];?>"><?php echo $post['title']; ?></a></h2>
             <div class="post-info">
-              <i class="fa fa-user-o"></i> Awa Melvine
+              <i class="fa fa-user-o"> <?php echo $post['username']; ?></i>
               &nbsp;
-              <i class="fa fa-calendar"></i> Jan 18, 2019
+              <i class="fa fa-calendar"></i> <?php echo date('F j, Y', strtotime($post['created_at']));?>
             </div>
-            <p class="post-body">Lorem ipsum dolor sit amet consectetur adipisicing elit. Doloribus expedita tempora
-              qui sunt! Ipsum nihil unde obcaecati.
+            <p class="post-body"> 
+            <?php echo html_entity_decode(substr($post['body'], 0, 150) . '...') ;?>
             </p>
-            <a href="#" class="read-more">Read More</a>
+            <a href="single.php?id=<?php echo $post['id'];?>" class="read-more">Read More</a>
           </div>
         </div>
-        <div class="post clearfix">
-          <img src="assets/images/image_2.jpg" class="post-image" alt="">
-          <div class="post-content">
-            <h2 class="post-title"><a href="#">That love is all there is, is all we know of love</h2></a>
-            <div class="post-info">
-              <i class="fa fa-user-o"></i> Awa Melvine
-              &nbsp;
-              <i class="fa fa-calendar"></i> Jan 18, 2019
-            </div>
-            <p class="post-body">Lorem ipsum dolor sit amet consectetur adipisicing elit. Doloribus expedita tempora
-              qui sunt! Ipsum nihil unde obcaecati.
-            </p>
-            <a href="#" class="read-more">Read More</a>
-          </div>
-        </div>
-        <div class="post clearfix">
-          <img src="assets/images/image_3.jpg" class="post-image" alt="">
-          <div class="post-content">
-            <h2 class="post-title"><a href="#">Do anything, but let it produce joy</a></h2>
-            <div class="post-info">
-              <i class="fa fa-user-o"></i> Awa Melvine
-              &nbsp;
-              <i class="fa fa-calendar"></i> Jan 18, 2019
-            </div>
-            <p class="post-body">Lorem ipsum dolor sit amet consectetur adipisicing elit. Doloribus expedita tempora
-              qui sunt! Ipsum nihil unde obcaecati.
-            </p>
-            <a href="#" class="read-more">Read More</a>
-          </div>
-        </div>
+
+        <?php endforeach;?>
       </div>
+        
+        
+       
       <div class="sidebar">
         <!-- Search -->
         <div class="search-div">
-          <form action="index.php" method="post">
-            <input type="text" name="search-term" class="text-input" placeholder="Search...">
+          <form action="inicial.php" method="post">
+            <input type="text" name="search-term" class="text-input" placeholder="Pesquisar...">
           </form>
         </div>
         <!-- // Search -->
         <!-- topics -->
         <div class="section topics">
-          <h2>Topics</h2>
+          <h2>Topicos</h2>
            <ul>
            <?php foreach($topics as $key => $topic): ?>
-            <a href="#">
-              <li><?php echo $topic['name'];?></li>
-            </a> 
+            <li><a href="<?php echo BASE_URL . '/inicial.php?t_id=' . $topic['id'] . '&name=' . $topic['name']; ?>">
+              <?php echo $topic['name'] ?> </a> </li>
             <?php endforeach; ?>
 
             

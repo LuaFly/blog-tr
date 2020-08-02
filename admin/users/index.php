@@ -1,4 +1,7 @@
 <?php include("../../path.php");?>
+<?php include(ROOT_PATH . "/app/controllers/users.php"); 
+adminOnly();
+?>
 <html lang="en">
 
 <head>
@@ -30,29 +33,38 @@
       </div>
       <div class="">
         <h2 style="text-align: center;">Manage Users</h2>
+        <?php include(ROOT_PATH . "/app/includes/messages.php"); ?>
         <table>
           <thead>
             <th>N</th>
             <th>Username</th>
+            <th>Email</th>
             <th colspan="3">Action</th>
           </thead>
           <tbody>
+          <?php foreach ($admin_users as $key => $user): ?>
             <tr class="rec">
-              <td>1</td>
-              <td>
-                <a href="#">Awa Melvine</a>
+              <td> 
+                <?php echo $key + 1; ?> 
               </td>
               <td>
-                <a href="edit.php" class="edit">
+                <?php echo $user['username']; ?>
+              </td>
+              <td> 
+                <?php echo $user['email']; ?>
+              </td>
+              <td>
+                <a href="edit.php?id=<?php echo $user['id']; ?>" class="edit">
                   Edit
                 </a>
               </td>
               <td>
-                <a href="#" class="delete">
+                <a href="index.php?delete_id=<?php echo $user['id'];?>" class="delete">
                   Delete
                 </a>
               </td>
             </tr>
+            <?php endforeach; ?>
           </tbody>
         </table>
       </div>

@@ -16,9 +16,20 @@ function validateUser($user){
             array_push($errors, 'As senhas não são iguais');
         }
 
+        // $existingUser= selectOne('users', ['email' => $user['email']]);
+        // if($existingUser){
+        //     array_push($errors, 'Email já existe');
+        // }
+
         $existingUser= selectOne('users', ['email' => $user['email']]);
         if($existingUser){
-            array_push($errors, 'Email já existe');
+            if(isset($user['update-user'])&& $existingUser['id'] != $user['id']){
+                array_push($errors, 'Usuário já existe');
+            }
+            
+            if(isset($user['create-admin'])){
+                array_push($errors, 'Já existe um usuário com esse e-mail');
+            }
         }
     return $errors;
 }

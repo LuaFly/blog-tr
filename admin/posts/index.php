@@ -1,5 +1,6 @@
 <?php include("../../path.php");
 include(ROOT_PATH . "/app/controllers/posts.php");
+adminOnly();
 ?>
 <html lang="en">
 
@@ -49,24 +50,24 @@ include(ROOT_PATH . "/app/controllers/posts.php");
               </td>
               <td>Awa</td>
               <td>
-                <a href="edit.php" class="edit">
+                <a href="edit.php?id=<?php echo $post['id'];?>" class="edit">
                   Edit
                 </a>
               </td>
               <td>
-                <a href="#" class="delete">
+                <a href="edit.php?delete_id=<?php echo $post['id'];?>" class="delete">
                   Delete
                 </a>
               </td>
               <td>
               <?php if($post['published']):?>
               
-                <a href="#" class="unpublish">
+                <a href="edit.php?published=0&p_id=<?php echo $post['id'] ?>" class="unpublish">
                   unpublish
                 </a>
               </td>
               <?php else: ?>
-              <a href="#" class="publish">
+              <a href="edit.php?published=1&p_id=<?php echo $post['id'] ?>" class="publish">
                   Publish
                 </a>
               <?php endif; ?>
